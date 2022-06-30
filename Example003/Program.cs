@@ -1,13 +1,13 @@
 ﻿/*
-Задача 2: Напишите программу, которая на вход
-принимает позиции элемента в двумерном массиве, и
-возвращает значение этого элемента или же указание,
-что такого элемента нет.
+Задача 3: Задайте двумерный массив из целых чисел.
+Найдите среднее арифметическое элементов в каждом
+столбце.
 Например, задан массив:
 1 4 7 2
 5 9 2 3
 8 4 2 4
-1 7 -> такого числа в массиве нет
+Среднее арифметическое каждого
+столбца: 4,6; 5,6; 3,6; 3.
 */
 
 int Prompt(string message) // Ввод числа ( функция )
@@ -50,40 +50,54 @@ void PrintMultiArray(int[,] array) // Запись многомерного ма
 
 }
 
-(int, bool) SearchNumberMultiArra(int[,] array, int row, int column)
-
+void PrintArr(double [] array, int sign) // Вывод массива в консоль в виде [66,1,19,73,48,13,50,25], если sign = 0 конец массива начинается с новой строки, если sign = 1 то строка продолжается
 {
-    int i = array.GetLength(0);
-    int j = array.GetLength(1);
-    bool noNumber = false;
-    int number = 0;
-    if (i  >= row && j >= column)
+    Console.Write("[ ");
+    for (int i = 0; i < array.Length; i++)
     {
-        number = array[row-1, column-1];
-        noNumber = true;
-        return (number, noNumber);
+        if (i < (array.Length - 1)) Console.Write(array[i] + " ; ");
+        if ((i == (array.Length - 1)) && (sign == 0))
+        {
+            Console.WriteLine(array[i] + " ]");
+        }
+        if ((i == (array.Length - 1)) && (sign == 1))
+        {
+            Console.Write(array[i] + " ]");
+        }
     }
-    else return (number, noNumber);
-
 }
 
 
+double[] AverageColMultiArra(int[,] array)
+
+{
+    double[] newArray = new double[array.GetLength(1)];
+
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+        for (int i = 0; i < array.GetLength(0); i++)
+        {
+            if (i < array.GetLength(0) - 1) newArray[j] += Convert.ToDouble(array[i, j]);
+            else newArray[j] = (newArray[j] + Convert.ToDouble(array[i, j])) / (i+1);
+        }
+    }
+    return newArray;
+
+
+}
+
 System.Console.WriteLine("Размер массива");
 int row = Prompt("Количество строк => ");
-
 int column = Prompt("Количество столбцов => ");
 
-int[,] array = GenerateMultiArray(row, column, 0, 20);
+int[,] array = GenerateMultiArray(row, column, -10, 10);
 
 PrintMultiArray(array);
 System.Console.WriteLine("");
 
 
-System.Console.WriteLine("Поиск числа в массиве");
-int IRow = Prompt("Введите № строки => ");
-int IColumn = Prompt("Введите № столбца => ");
+double[] myArray = AverageColMultiArra(array);
 
-(int newNumber, bool noNumber) = SearchNumberMultiArra(array , IRow, IColumn);
+System.Console.Write("Среднее арифметическое каждого столбца: ");
+PrintArr(myArray,0);
 
-if (noNumber==true ) System.Console.WriteLine($" По адресу ( {IRow}, {IColumn} ) в массиве находится число {newNumber} ");
-else System.Console.WriteLine($" Адреса ( {IRow}, {IColumn} ) нет в массиве");

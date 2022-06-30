@@ -47,6 +47,8 @@ void PrintMultiArray(double[,] array) // Запись многомерного �
     }
 
 }
+
+System.Console.WriteLine("Размер массива");
 int row = Prompt("Количество строк => ");
 
 int column = Prompt("Количество столбцов => ");
