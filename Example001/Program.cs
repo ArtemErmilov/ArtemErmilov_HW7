@@ -23,11 +23,8 @@ double[,] GenerateMultiArray(int row, int column, double min, double max) // Ð—Ð
     {
         for (int j = 0; j < array.GetLength(1); j++)
         {
-            if (min < 0 && max < 0) array[i, j] = rnd.NextDouble() * (min - max) + max;
-            else array[i, j] = rnd.NextDouble() * (max - min) + min;
-            //if (min >= 0 && max >= 0) array[i, j] = rnd.NextDouble() * (max - min) + min;
-            //(min < 0 && max >= 0)
-
+             array[i, j] = rnd.NextDouble() * (min - max) + max;
+            
         }
     }
 
